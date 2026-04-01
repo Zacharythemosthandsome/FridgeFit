@@ -67,9 +67,15 @@ If you cancel the file picker or parsing fails, the app falls back to manual act
 ## Project Structure
 
 ```text
-Project/
+.
 ├── LICENSE
 ├── README.md
+├── fridgefit/
+│   ├── app.py
+│   ├── auth.py
+│   ├── config.py
+│   ├── health.py
+│   └── meal_planner.py
 ├── project.py
 └── requirements.txt
 ```
@@ -88,7 +94,7 @@ Generated at runtime:
 
 ## Manual Test Cases For `project.py`
 
-Use these cases to test the main features of the application. For repeatable results, run the app from the `Project` folder and use a fresh username when needed.
+Use these cases to test the main features of the application. For repeatable results, run the app from the repository root and use a fresh username when needed.
 
 ### Test Case 1: Register a New User Successfully
 
