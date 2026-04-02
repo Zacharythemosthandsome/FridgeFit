@@ -1,4 +1,4 @@
-"""Shared configuration for the FridgeFit application."""
+# Shared configuration for the FridgeFit application. (Wang Zejia)
 
 from pathlib import Path
 

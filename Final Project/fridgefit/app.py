@@ -1,4 +1,4 @@
-"""Application state machine for FridgeFit."""
+# Application state machine for FridgeFit. (Wang Zejia)
 
 import time
 
@@ -7,19 +7,17 @@ from .meal_planner import generate_ai_meal_plan
 
 
 class FridgeFitApp:
-    """
-    The main application controller.
-    Manages the state machine logic for navigating through different menus.
-    """
+
+    # The main application controller. Manage the state machine logic for navigating through different menus.
 
     def __init__(self):
-        """Initialize the core components and application state."""
+        # Initialize the core components and application state.
         self.user_manager = UserManager()
         self.current_user = None
         self.current_state = "main_menu"
 
     def show_main_menu(self) -> str:
-        """Display the landing page and return the next state."""
+        # Display the landing page and return the next state.
         print("==============================")
         print("   WELCOME TO FRIDGEFIT")
         print("==============================")
@@ -42,7 +40,7 @@ class FridgeFitApp:
         return "main_menu"
 
     def show_dashboard(self) -> str:
-        """Display the dashboard for an authenticated user."""
+        # Display the dashboard for an authenticated user.
         while True:
             print("\n==============================")
             print("      FRIDGEFIT DASHBOARD")
@@ -65,7 +63,7 @@ class FridgeFitApp:
                 print("Invalid choice. Please try again.")
 
     def run(self) -> None:
-        """Run the application until the user exits."""
+        # Run the application until the user exits.
         while self.current_state != "exit":
             if self.current_state == "main_menu":
                 self.current_state = self.show_main_menu()
@@ -82,9 +80,3 @@ class FridgeFitApp:
                 self.current_state = self.show_dashboard()
 
         print("\nGoodbye! Keep fit and eat well!")
-
-
-def main() -> None:
-    """Application entry point."""
-    app = FridgeFitApp()
-    app.run()

@@ -1,5 +1,5 @@
-"""FridgeFit application package."""
+# FridgeFit application package.
 
-from .app import FridgeFitApp, main
+from .app import FridgeFitApp
 
-__all__ = ["FridgeFitApp", "main"]
+__all__ = ["FridgeFitApp"]

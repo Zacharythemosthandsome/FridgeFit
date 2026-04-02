@@ -1,4 +1,4 @@
-"""User authentication and persistence."""
+# User authentication and persistence. (Wang Zejia)
 
 import json
 import time

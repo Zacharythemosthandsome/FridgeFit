@@ -68,6 +68,7 @@ If you cancel the file picker or parsing fails, the app falls back to manual act
 
 ```text
 .
+├── .gitignore
 ├── LICENSE
 ├── README.md
 ├── fridgefit/
@@ -82,8 +83,9 @@ If you cancel the file picker or parsing fails, the app falls back to manual act
 
 Generated at runtime:
 
-- `users.json` is created in the folder where you launch the program if it does not already exist.
+- `users.json` is created in the project folder beside `project.py` if it does not already exist.
 - An imported Apple Health zip creates a sibling folder named after the zip file, containing CSV output such as `Record.csv`.
+- Python cache files inside `__pycache__/` are generated locally and should not be committed.
 
 ## Notes About Current Implementation
 
@@ -94,7 +96,7 @@ Generated at runtime:
 
 ## Manual Test Cases For `project.py`
 
-Use these cases to test the main features of the application. For repeatable results, run the app from the repository root and use a fresh username when needed.
+Use these cases to test the main features of the application. For repeatable results, run the app from the `Final Project` folder and use a fresh username when needed.
 
 ### Test Case 1: Register a New User Successfully
 

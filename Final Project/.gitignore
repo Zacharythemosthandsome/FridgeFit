@@ -1,0 +1,4 @@
+__pycache__/
+fridgefit/__pycache__/
+*.py[cod]
+users.json

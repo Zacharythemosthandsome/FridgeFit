@@ -8,6 +8,7 @@ from .health import get_health_data_summary, process_apple_health_zip
 
 MANUAL_ACTIVITY_PROMPT = "Please manually enter today's workout (e.g., 'ran 10km', 'sedentary'): "
 
+# ------------------------------------- AI meal plan manu system (Wang Zejia) ------------------------------
 
 def generate_ai_meal_plan(username: str) -> None:
     """Run the interactive AI meal plan flow for the logged-in user."""
@@ -31,6 +32,7 @@ def generate_ai_meal_plan(username: str) -> None:
 
     prompt = _build_recipe_prompt(goal, ingredients, activity_level)
 
+# ------------------------------------- Get Respond From AI (You Xuanhe)------------------------------
     try:
         response_text = _request_recipe(prompt, api_key)
         print("\n" + "=" * 50)
@@ -44,6 +46,7 @@ def generate_ai_meal_plan(username: str) -> None:
 
     input("\n(Press Enter to return to Dashboard)")
 
+# ------------------------------------- AI meal plan manu system (Wang Zejia) ------------------------------
 
 def _prompt_for_goal() -> str:
     print("Please select your primary fitness goal:")
@@ -87,7 +90,9 @@ def _prompt_for_activity_level() -> str:
     print("[System] No file selected. Reverting to manual input.")
     return input(MANUAL_ACTIVITY_PROMPT).strip()
 
+# ---------------------------------------- API Key Config (You Xuanhe)----------------------------------------
 
+# Get API KEY from system environment variable
 def _get_api_key() -> str:
     api_key = os.getenv("DEEPSEEK_API_KEY")
     if not api_key:
@@ -97,6 +102,7 @@ def _get_api_key() -> str:
         print("Thinking...")
     return api_key
 
+# ---------------------------- Prompt Building (Wang Zejia)---------------------------------------------
 
 def _build_recipe_prompt(goal: str, ingredients: str, activity_level: str) -> str:
     return f"""
@@ -108,7 +114,7 @@ def _build_recipe_prompt(goal: str, ingredients: str, activity_level: str) -> st
 
     Please provide a personalized recipe adjusting macros/calories based on their exact energy expenditure today. Include cooking instructions and briefly explain why this fits their goal and activity level. Use markdown.
     """
-
+# ---------------------------- API Calling (You Xuanhe)---------------------------------------------
 
 def _request_recipe(prompt: str, api_key: str) -> str:
     from openai import OpenAI

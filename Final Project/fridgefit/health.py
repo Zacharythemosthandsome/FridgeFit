@@ -1,8 +1,9 @@
-"""Apple Health import and summary helpers."""
+# Apple Health import and summary helpers. (You Xuanhe)
+
 
 import csv
-import zipfile
-from pathlib import Path
+import zipfile   # Unzip and extract ZIP files
+from pathlib import Path  # Get file storage path
 from typing import IO, Optional, Tuple
 
 from .config import APP_DIR, HEALTH_EXPORT_TAGS
@@ -12,7 +13,7 @@ def choose_apple_health_zip() -> Optional[Path]:
     """Open a file picker and return the selected Apple Health export zip."""
     import tkinter as tk
     from tkinter import filedialog
-
+    # Create a file selection window and bring it to the top.
     root = tk.Tk()
     root.withdraw()
     root.attributes("-topmost", True)
@@ -31,19 +32,19 @@ def process_apple_health_zip(project_folder: Optional[Path] = None) -> Optional[
     """Convert supported XML records from an Apple Health export zip into CSV files."""
     print("Apple Health Export Tool (Output to Project Folder)")
     project_folder = project_folder or APP_DIR
-
+    # Read the file storage path
     zip_path = choose_apple_health_zip()
     if zip_path is None:
         return None
-
+    
     output_folder = project_folder / zip_path.stem
     if not output_folder.exists():
         output_folder.mkdir(parents=True, exist_ok=True)
         print(f"Created directory in project: {output_folder}")
-
+    # Parse and extract ZIP files
     try:
-        with zipfile.ZipFile(zip_path, "r") as zip_file:
-            xml_files = [name for name in zip_file.namelist() if name.endswith(".xml")]
+        with zipfile.ZipFile(zip_path, "r") as zip_file: # Since no modifications are needed when parsing a ZIP file, read-only mode is used.
+            xml_files = [name for name in zip_file.namelist() if name.endswith(".xml")] # Find all files in a ZIP archive that end with the .xml extension.
 
             for xml_name in xml_files:
                 if "cda" in xml_name.lower():
@@ -52,7 +53,7 @@ def process_apple_health_zip(project_folder: Optional[Path] = None) -> Optional[
 
         print(f"\nDone! Files are located in: {output_folder}")
         return output_folder
-
+    # If an error is encountered, print the error message.
     except Exception as error:
         print(f"\nError: {error}")
         return None
@@ -65,7 +66,7 @@ def _process_xml_file(zip_file: zipfile.ZipFile, xml_name: str, output_folder: P
 
     with zip_file.open(xml_name) as scan_stream:
         total_records = _count_records(scan_stream)
-
+    # Analyze the file, pre-read the total entries, and prepare to output a CSV file.
     if total_records == 0:
         print(f"No health record found in {xml_name}, skipping.")
         return
@@ -99,7 +100,7 @@ def _write_records_to_csv(
     outputs = {}
     writers = {}
     count = 0
-
+    # Create a progress bar and begin the conversion.
     try:
         with tqdm(
             total=total_size,
@@ -115,8 +116,8 @@ def _write_records_to_csv(
 
                 if data:
                     if tag_name not in outputs:
-                        csv_name = output_folder / f"{tag_name}.csv"
-                        output_file = open(csv_name, "w", newline="", encoding="utf-8-sig")
+                        csv_name = output_folder / f"{tag_name}.csv"  # Create a CSV file in the same folder as the project.
+                        output_file = open(csv_name, "w", newline="", encoding="utf-8-sig")  # Use UTF-8-sig encoding with BOM to prevent garbled characters in the converted data.
                         writer = csv.DictWriter(
                             output_file,
                             fieldnames=data.keys(),
@@ -144,7 +145,7 @@ def _clear_element(elem) -> None:
     while elem.getprevious() is not None:
         del elem.getparent()[0]
 
-
+# Filter Items
 def get_health_data_summary(folder_path: Path) -> Optional[str]:
     """Read the exported Record.csv file and summarize the latest activity day."""
     import pandas as pd
